@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.test.mapper.AircraftCarrierMapper">
+    <select id="getAllData" resultType="com.xyy.test.entity.AircraftCarrier">
+        <choose>
+            <when test="(order != null and order.trim().length() > 0)">
+                select * from aircraft_carrier order by ${order} desc; <!-- 指定排序字段用${}-->
+            </when>
+            <otherwise>
+                select * from aircraft_carrier order by rank;
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
