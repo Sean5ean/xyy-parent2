@@ -4,6 +4,8 @@ spring cloud 的版本问题 Greenwich.SR2 解决
 pom  dependencyManagement
 建gitlab私库
 git的 rebase frok fetch
+不要在公共分支使用rebase
+本地和远端对应同一条分支,优先使用rebase,而不是merge
 
 
 model名、  model文件夹名、 pom artifactId (maven)  最好保持一致
