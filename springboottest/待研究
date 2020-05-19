@@ -3,6 +3,7 @@ application.yml 的profile
 spring cloud 的版本问题 Greenwich.SR2 解决
 pom  dependencyManagement
 建gitlab私库
+merge
 
 
 model名、  model文件夹名、 pom artifactId (maven)  最好保持一致
