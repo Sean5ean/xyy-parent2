@@ -2,7 +2,6 @@ package com.xyy.test.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.xyy.test.config.ConfigBeanValue;
 import com.xyy.test.entity.AircraftCarrier;
@@ -14,7 +13,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,11 +50,11 @@ public class OL5Controller {
             @ApiImplicitParam(name = "name", value = "名字", required = false, dataType = "String", defaultValue = "aaa"),
     })
     @GetMapping(value = {"/users"})
-    public String getAllUser(Model model, @RequestParam(required = false) String name,
-                             @RequestParam(value = "page", defaultValue = "1") int page,
-                             @RequestParam(value = "size", defaultValue = "5") int size) {
+    public String getAllUser(Model model,
+                             @PageableDefault(sort = {"start_time"}, direction = Sort.Direction.DESC) Pageable pageable,
+                             @RequestParam(required = false) String name) {
 
-        PageHelper.startPage(page, size);
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
         List<User> allUser = userMapper.getAllUser(name);
         model.addAttribute("name", allUser);
 
