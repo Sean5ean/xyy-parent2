@@ -2,6 +2,8 @@ package com.xyy.test.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.xyy.test.config.ConfigBeanValue;
 import com.xyy.test.entity.AircraftCarrier;
 import com.xyy.test.entity.User;
@@ -46,7 +48,11 @@ public class OL5Controller {
             @ApiImplicitParam(name = "name", value = "名字", required = false, dataType = "String", defaultValue = "aaa"),
     })
     @GetMapping(value = {"/users"})
-    public String getAllUser(Model model, @RequestParam(required = false) String name) {
+    public String getAllUser(Model model, @RequestParam(required = false) String name,
+                             @RequestParam(value = "page", defaultValue = "1") int page,
+                             @RequestParam(value = "size", defaultValue = "5") int size) {
+
+        PageHelper.startPage(page, size);
         List<User> allUser = userMapper.getAllUser(name);
         model.addAttribute("name", allUser);
 
