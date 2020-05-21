@@ -37,19 +37,19 @@ server:
   servlet:
     context-path: /demo
 
-#spring.datasource:
-#  name: ol5  #???????
-#  url: jdbc:mysql://120.53.27.79:3306/ol5 #url
-#  username: root  #?????
-#  password: 271828  #????
-#  driver-class-name: com.mysql.cj.jdbc.Driver  #?????????????
-
 spring.datasource:
-  name: testdatabase
-  url: jdbc:postgresql://localhost:5432/testdatabase
-  username: xyy
+  name: ol5
+  url: jdbc:mysql://localhost:3306/ol5
+  username: root
   password: 123456
-  driver-class-name: org.postgresql.Driver
+  driver-class-name: com.mysql.cj.jdbc.Driver
+
+#spring.datasource:
+#  name: testdatabase
+#  url: jdbc:postgresql://localhost:5432/testdatabase
+#  username: xyy
+#  password: 123456
+#  driver-class-name: org.postgresql.Driver
 
 
 mybatis:

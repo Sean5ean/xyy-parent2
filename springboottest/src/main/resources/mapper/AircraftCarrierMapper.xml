@@ -7,7 +7,7 @@
                 select * from aircraft_carrier order by ${order} desc; <!-- 指定排序字段用${}-->
             </when>
             <otherwise>
-                select * from aircraft_carrier order by rank;
+                select * from aircraft_carrier order by `rank`;
             </otherwise>
         </choose>
     </select>
