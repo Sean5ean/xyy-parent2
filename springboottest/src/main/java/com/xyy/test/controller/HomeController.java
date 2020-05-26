@@ -50,9 +50,9 @@ public class HomeController {
         try {
             subject.login(token);
         } catch (IncorrectCredentialsException ice) {
-            return "password error!";
+            return "密码不正确";
         } catch (UnknownAccountException uae) {
-            return "username error!";
+            return "不存在该账户";
         }
 
         Specification<User> specification = new Specification<User>() {
@@ -65,7 +65,7 @@ public class HomeController {
         };
         Optional<User> user = userService.findOne(specification);
         subject.getSession().setAttribute("user", user.get());
-        return "SUCCESS";
+        return "登录成功";
     }
 
     @GetMapping("register")
@@ -76,7 +76,7 @@ public class HomeController {
         passwordHelper.encryptPassword(user);
 
         userService.save(user);
-        return "SUCCESS";
+        return "注册成功";
     }
 }
 
