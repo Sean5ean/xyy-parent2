@@ -19,6 +19,12 @@ spring:
         max-wait: -1
         #连接池中的最小空闲连接
         min-idle: 0
+        
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false #解决"方法尚未被实作"的报错
 
 
 #????
@@ -37,19 +43,20 @@ server:
   servlet:
     context-path: /demo
 
-spring.datasource:
-  name: ol5
-  url: jdbc:mysql://localhost:3306/ol5
-  username: root
-  password: 123456
-  driver-class-name: com.mysql.cj.jdbc.Driver
-
 #spring.datasource:
-#  name: testdatabase
-#  url: jdbc:postgresql://localhost:5432/testdatabase
-#  username: xyy
+#  name: ol5
+#  url: jdbc:mysql://mysql:3306/ol5
+#  username: root
 #  password: 123456
-#  driver-class-name: org.postgresql.Driver
+#  driver-class-name: com.mysql.cj.jdbc.Driver
+
+spring.datasource:
+  name: testdatabase
+  url: jdbc:postgresql://localhost:5432/testdatabase
+  username: xyy
+  password: 123456
+  driver-class-name: org.postgresql.Driver
+
 
 
 mybatis:
