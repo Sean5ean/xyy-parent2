@@ -1,5 +1,7 @@
 package com.xyy.test.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,9 +25,9 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String salt;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role_t", joinColumns = {@JoinColumn(name = "uid")}, inverseJoinColumns = {
-            @JoinColumn(name = "rid")})
+    @ManyToMany(fetch = FetchType.LAZY) //懒加载，加载一个实体时，定义懒加载的属性不会马上从数据库中加载
+    @JsonIgnore
+    @JoinTable(name = "user_role_t", joinColumns = {@JoinColumn(name = "uid")}, inverseJoinColumns = {@JoinColumn(name = "rid")})
     private List<SysRole> roles;
 
     public long getId() {

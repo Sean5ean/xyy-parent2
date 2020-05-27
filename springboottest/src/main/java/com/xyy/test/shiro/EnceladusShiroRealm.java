@@ -1,4 +1,4 @@
-package com.xyy.test.config;
+package com.xyy.test.shiro;
 
 import com.xyy.test.dao.UserRepository;
 import com.xyy.test.entity.SysPermission;
@@ -24,6 +24,7 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserRepository userService;
 
+    //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
@@ -49,6 +50,7 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
         return authorizationInfo;
     }
 
+    //认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
@@ -65,7 +67,7 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
 
         Optional<User> user = userService.findOne(specification);
 
-        if (user == null) {
+        if (!user.isPresent()) {
             return null;
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.get().getUsername(), user.get().getPassword(),

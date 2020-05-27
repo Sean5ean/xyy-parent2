@@ -1,8 +1,10 @@
 package com.xyy.test.config;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.xyy.test.filter.AuthFilter;
+import com.xyy.test.shiro.EnceladusShiroRealm;
 import com.xyy.test.shiro.PasswordHelper;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
@@ -15,22 +17,34 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ShiroConfig {
     @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
+    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager, AuthFilter authFilter) {
+        ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
+        shiroFilter.setSecurityManager(securityManager);
 
-        Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthc");
-        shiroFilterFactoryBean.setSuccessUrl("/index2");
+        shiroFilter.setLoginUrl("/login"); //认证不通过的页面
+        shiroFilter.setUnauthorizedUrl("/unauthc"); //授权不通过的页面
+        shiroFilter.setSuccessUrl("/index2");
 
-        filterChainDefinitionMap.put("/*", "anon");
-        filterChainDefinitionMap.put("/authc/index", "authc");
-        filterChainDefinitionMap.put("/authc/admin", "roles[admin]");
-        filterChainDefinitionMap.put("/authc/renewable", "perms[Create,Update]");
-        filterChainDefinitionMap.put("/authc/removable", "perms[Delete]");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        return shiroFilterFactoryBean;
+        //设置自定义filter
+        //Map<String, Filter> filter = new HashedMap();
+        //filter.put("auth", authFilter); //@Component("authFilter") 所以这里可以注入
+        //shiroFilter.setFilters(filter);
+
+        //使用LinkedHashMap保证拦截器的顺序性
+        Map<String, String> filterRuleMap = new LinkedHashMap<>();
+
+
+        filterRuleMap.put("/doLogin", "anon"); //对登录放行
+        filterRuleMap.put("/login", "anon");
+        filterRuleMap.put("/unauthc", "anon");
+        filterRuleMap.put("/authc/token", "authc"); //自定义的filter
+        filterRuleMap.put("/authc/index", "authc");
+        filterRuleMap.put("/authc/admin", "roles[admin]");
+        filterRuleMap.put("/authc/renewable", "perms[Create,Update]");
+        filterRuleMap.put("/authc/removable", "perms[Delete]");
+        //filterRuleMap.put("/**", "auth");
+        shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
+        return shiroFilter;
     }
 
     @Bean

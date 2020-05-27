@@ -16,8 +16,7 @@ public class PasswordHelper {
     public void encryptPassword(User user) {
         // 随机字符串作为salt因子，实际参与运算的salt我们还引入其它干扰因子
         user.setSalt(randomNumberGenerator.nextBytes().toHex());
-        String newPassword = new SimpleHash(ALGORITHM_NAME, user.getPassword(),
-                ByteSource.Util.bytes(user.getCredentialsSalt()), HASH_ITERATIONS).toHex();
+        String newPassword = new SimpleHash(ALGORITHM_NAME, user.getPassword(), ByteSource.Util.bytes(user.getCredentialsSalt()), HASH_ITERATIONS).toHex();
         user.setPassword(newPassword);
     }
 }

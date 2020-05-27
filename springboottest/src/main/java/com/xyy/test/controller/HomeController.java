@@ -3,6 +3,7 @@ package com.xyy.test.controller;
 import com.xyy.test.dao.UserRepository;
 import com.xyy.test.entity.User;
 import com.xyy.test.shiro.PasswordHelper;
+import com.xyy.test.util.JwtUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -10,10 +11,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.*;
 import java.util.Optional;
@@ -26,6 +24,9 @@ public class HomeController {
     private UserRepository userService;
     @Autowired
     private PasswordHelper passwordHelper;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @GetMapping("login")
     public Object login() {
@@ -43,12 +44,17 @@ public class HomeController {
     }
 
 
-    @GetMapping("doLogin")
+    @RequestMapping(value = "doLogin", method = {RequestMethod.GET, RequestMethod.POST})
     public Object doLogin(@RequestParam String username, @RequestParam String password) {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+
+
+        String tokenBack = "";
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
+            //返回的token
+            tokenBack = jwtUtil.generateToken(username);
         } catch (IncorrectCredentialsException ice) {
             return "密码不正确";
         } catch (UnknownAccountException uae) {
@@ -65,7 +71,7 @@ public class HomeController {
         };
         Optional<User> user = userService.findOne(specification);
         subject.getSession().setAttribute("user", user.get());
-        return "登录成功";
+        return "登录成功" + tokenBack;
     }
 
     @GetMapping("register")

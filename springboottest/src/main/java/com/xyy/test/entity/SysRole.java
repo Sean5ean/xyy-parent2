@@ -21,13 +21,11 @@ public class SysRole implements Serializable {
     @GeneratedValue
     private Integer id;
     private String role;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "role_permission_t", joinColumns = {@JoinColumn(name = "rid")}, inverseJoinColumns = {
-            @JoinColumn(name = "pid")})
+    @ManyToMany(fetch = FetchType.EAGER) //急加载，加载一个实体时，定义急加载的属性会立即从数据库中加载
+    @JoinTable(name = "role_permission_t", joinColumns = {@JoinColumn(name = "rid")}, inverseJoinColumns = {@JoinColumn(name = "pid")})
     private List<SysPermission> permissions;
     @ManyToMany
-    @JoinTable(name = "user_role_t", joinColumns = {@JoinColumn(name = "rid")}, inverseJoinColumns = {
-            @JoinColumn(name = "uid")})
+    @JoinTable(name = "user_role_t", joinColumns = {@JoinColumn(name = "rid")}, inverseJoinColumns = {@JoinColumn(name = "uid")})
     private List<User> users;
 
     public Integer getId() {

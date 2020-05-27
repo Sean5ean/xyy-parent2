@@ -19,7 +19,7 @@ spring:
         max-wait: -1
         #连接池中的最小空闲连接
         min-idle: 0
-        
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -90,6 +90,15 @@ spring.cloud:
 nacos:
   config:
     server-addr: 127.0.0.1:8848
+
+#jwt配置
+dhb:
+  jwt:
+    # 加密秘钥
+    secret: f4e2e52034348f86b67cde581c0f9eb5
+    # token有效时长，7天，单位秒 604800
+    expire: 10
+    header: authorization
 
 
 
