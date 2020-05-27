@@ -1,9 +1,8 @@
 package com.xyy.test.controller;
 
 import com.xyy.test.entity.User;
-import com.xyy.test.exception.CustomException;
+import com.xyy.test.exception.MessageException;
 import com.xyy.test.restresult.RestResult;
-import com.xyy.test.restresult.RestResultEnum;
 import com.xyy.test.restresult.RestResultUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -43,7 +42,8 @@ public class AuthcController {
     // token
     @GetMapping("token")
     public Object token() {
-        throw new CustomException("tokenl", 345);
+        int i = 1 / 0;
+        throw new MessageException("tokenl", 345);
         //return "token";
     }
 }

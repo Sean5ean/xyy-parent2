@@ -1,7 +1,7 @@
 package com.xyy.test.filter;
 
 
-import com.xyy.test.exception.CustomException;
+import com.xyy.test.exception.MessageException;
 import com.xyy.test.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
@@ -33,11 +33,11 @@ public class AuthFilter extends FormAuthenticationFilter {
             return false;
         }
         if (StringUtils.isBlank(token)) {
-            throw new CustomException(jwtUtil.getHeader() + "不能为空", HttpServletResponse.SC_UNAUTHORIZED);
+            throw new MessageException(jwtUtil.getHeader() + "不能为空", HttpServletResponse.SC_UNAUTHORIZED);
         }
         Claims claims = jwtUtil.parseToken(token);
         if (null == claims || jwtUtil.isTokenExpired(claims.getExpiration())) {
-            throw new CustomException(jwtUtil.getHeader() + "token过期", HttpServletResponse.SC_UNAUTHORIZED);
+            throw new MessageException(jwtUtil.getHeader() + "token过期", HttpServletResponse.SC_UNAUTHORIZED);
         }
         return true;
     }

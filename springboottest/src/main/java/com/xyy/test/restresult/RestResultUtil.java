@@ -1,5 +1,6 @@
 package com.xyy.test.restresult;
 
+
 public class RestResultUtil {
 
     /**
@@ -28,6 +29,17 @@ public class RestResultUtil {
         RestResult restResult = new RestResult();
         restResult.setCode(code);
         restResult.setMsg(msg);
+        return restResult;
+    }
+
+
+    /**
+     * 返回异常
+     **/
+    public static RestResult exception(Exception e) {
+        RestResult restResult = new RestResult();
+        restResult.setCode(RestResultEnum.UNKNOWN_ERROR.getCode());
+        restResult.setMsg(e.getMessage());
         return restResult;
     }
 }
