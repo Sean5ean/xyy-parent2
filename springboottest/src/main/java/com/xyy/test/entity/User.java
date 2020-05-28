@@ -5,14 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 //shiro jpa
 @Entity
@@ -22,6 +15,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue
     private long id;
+    @Column
     private String username;
     private String password;
     private String salt;

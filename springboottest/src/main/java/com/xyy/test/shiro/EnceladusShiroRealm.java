@@ -64,8 +64,8 @@ public class EnceladusShiroRealm extends AuthorizingRealm {
                 return predicate;
             }
         };
-
         Optional<User> user = userService.findOne(specification);
+
 
         if (!user.isPresent()) {
             return null;

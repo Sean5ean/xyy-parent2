@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = MessageException.class)
     @ResponseBody
     public RestResult bizExceptionHandler(HttpServletRequest req, MessageException e) {
-        log.error("发生业务异常！原因是：{}", e.getMessage());
+        log.error("发生业务异常!：", e);
         return RestResultUtil.exception(e);
     }
 
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NullPointerException.class)
     @ResponseBody
     public RestResult exceptionHandler(HttpServletRequest req, NullPointerException e) {
-        log.error("发生空指针异常！原因是:", e);
+        log.error("发生空指针异常!:", e);
         return RestResultUtil.exception(e);
     }
 
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public RestResult exceptionHandler(HttpServletRequest req, Exception e) {
-        log.error("未知异常！原因是:", e);
+        log.error("未知异常!:", e);
         return RestResultUtil.exception(e);
     }
 }

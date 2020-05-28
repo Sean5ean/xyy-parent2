@@ -42,8 +42,7 @@ public class AuthcController {
     // token
     @GetMapping("token")
     public Object token() {
-        int i = 1 / 0;
+        //int i = 1 / 0;
         throw new MessageException("tokenl", 345);
-        //return "token";
     }
 }
