@@ -2,6 +2,8 @@ package com.xyy.test.controller;
 
 import com.xyy.test.dao.UserRepository;
 import com.xyy.test.entity.User;
+import com.xyy.test.restresult.RestResult;
+import com.xyy.test.restresult.RestResultUtil;
 import com.xyy.test.shiro.PasswordHelper;
 import com.xyy.test.util.JwtUtil;
 import org.apache.shiro.SecurityUtils;
@@ -29,18 +31,18 @@ public class HomeController {
     JwtUtil jwtUtil;
 
     @GetMapping("login")
-    public Object login() {
-        return "请登录";
+    public RestResult<String> login() {
+        return RestResultUtil.toast("请登录");
     }
 
     @GetMapping("unauthc")
     public Object unauthc() {
-        return "未授权";
+        return RestResultUtil.error(-403, "未授权");
     }
 
     @GetMapping("index2")
     public Object index2() {
-        return "授权成功，进入首页";
+        return RestResultUtil.success();
     }
 
 

@@ -18,7 +18,6 @@ public class RestResultUtil {
      * 成功但不带数据
      **/
     public static RestResult success() {
-
         return success(null);
     }
 
@@ -38,8 +37,16 @@ public class RestResultUtil {
      **/
     public static RestResult exception(Exception e) {
         RestResult restResult = new RestResult();
-        restResult.setCode(RestResultEnum.UNKNOWN_ERROR.getCode());
-        restResult.setMsg(e.getMessage());
+        restResult.setCode(RestResultEnum.ERROR.getCode());
+        restResult.setMsg(RestResultEnum.ERROR.getMsg());
+        restResult.setData(e.getMessage());
+        return restResult;
+    }
+
+    public static RestResult toast(String info) {
+        RestResult restResult = new RestResult();
+        restResult.setCode(RestResultEnum.TOAST_SUCCESS.getCode());
+        restResult.setMsg(info);
         return restResult;
     }
 }
