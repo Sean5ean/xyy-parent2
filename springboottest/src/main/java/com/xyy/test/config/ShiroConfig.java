@@ -42,7 +42,7 @@ public class ShiroConfig {
         filterRuleMap.put("/authc/admin", "roles[admin]");
         filterRuleMap.put("/authc/renewable", "perms[Create,Update]");
         filterRuleMap.put("/authc/removable", "perms[Delete]");
-        //filterRuleMap.put("/**", "auth");
+        filterRuleMap.put("/**", "anon");
         shiroFilter.setFilterChainDefinitionMap(filterRuleMap);
         return shiroFilter;
     }
