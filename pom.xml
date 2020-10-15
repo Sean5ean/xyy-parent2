@@ -21,7 +21,9 @@
         <module>springboottest2</module>
         <module>springboottest3</module>
         <module>springboottest4</module>
-        <module>dubbo-demo</module>
+        <module>dubbo-provider</module>
+        <module>dubbo-api</module>
+        <module>dubbo-consumer</module>
     </modules>
 
     <properties>
